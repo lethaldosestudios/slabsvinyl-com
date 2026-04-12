@@ -11,7 +11,7 @@ module.exports = {
       lg:      "0",
       xl:      "0",
       "2xl":   "0",
-      full:    "9999px", // ONLY for vinyl disc
+      full:    "9999px", // ONLY for vinyl disc — no other use
     },
     fontFamily: {
       serif:   ["Instrument Serif", "Georgia", "serif"],
@@ -20,6 +20,7 @@ module.exports = {
     },
     extend: {
       colors: {
+          // Brand palette
         paper:   "#F6F6F0",
         cream:   "#EFEEEA",
         sleeve:  "#CEC6B9",
@@ -29,6 +30,7 @@ module.exports = {
         wax:     "#9A181A",
         caramel: "#B28B58",
         ink:     "#141313",
+        // Light mode semantic tokens
         "slabs-bg":            "#F6F6F0",
         "slabs-surface":       "#EFEEEA",
         "slabs-surface-muted": "#CEC6B9",
@@ -38,6 +40,9 @@ module.exports = {
         "slabs-primary":       "#204F41",
         "slabs-price":         "#204F41",
         "slabs-error":         "#9A181A",
+        "slabs-border":        "rgba(20,19,19,0.12)",
+        "slabs-divider":       "rgba(20,19,19,0.08)",
+        // Dark mode semantic tokens
         "dark-bg":             "#141313",
         "dark-surface":        "#242120",
         "dark-surface-muted":  "#323030",
@@ -48,6 +53,8 @@ module.exports = {
         "dark-text-faint":     "#6B6257",
         "dark-price":          "#E8A830",
         "dark-error":          "#C4332A",
+        "dark-border":         "rgba(239,238,234,0.10)",
+        "dark-divider":        "rgba(239,238,234,0.07)",
       },
       fontSize: {
         "display-xl": ["clamp(3rem,0.5rem+7vw,8rem)",         { lineHeight: "1.03", letterSpacing: "-0.025em" }],
