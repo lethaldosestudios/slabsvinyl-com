@@ -19,6 +19,15 @@ module.exports = {
       sans:    ["Funnel Sans", "Helvetica Neue", "sans-serif"],
     },
     extend: {
+      keyframes: {
+        'chevron-bounce': {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(6px)' },
+        }
+      },
+      animation: {
+        'chevron-bounce': 'chevron-bounce 2s ease-in-out infinite',
+      },
       colors: {
           // Brand palette
         paper:   "#F6F6F0",

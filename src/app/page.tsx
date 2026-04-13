@@ -1,5 +1,13 @@
-// Home page — placeholder
-// Builder: assemble Nav + Hero + NewArrivals + FromTheCrates + Collections + SonicLineage + AboutTrust + Footer
+import { Nav } from "../components/Nav";
+import { Hero } from "../components/Hero";
+import { NewArrivals } from "../components/NewArrivals";
+
 export default function HomePage() {
-  return <main>slabsvinyl.com</main>
+  return (
+    <main>
+      <Nav cartCount={0} currentPath="/" transparent={true} />
+      <Hero />
+      <NewArrivals />
+    </main>
+  );
 }
