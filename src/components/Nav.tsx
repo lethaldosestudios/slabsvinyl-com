@@ -52,9 +52,9 @@ export function Nav({ cartCount, currentPath, transparent = false }: NavProps) {
   const headerBgClass = isFilled ? "bg-slabs-surface" : "bg-transparent";
   const headerBorderClass = isFilled ? "border-b border-slabs-border" : "border-b-0 border-transparent";
 
-  const wordmarkColorClass = isFilled ? "text-slabs-text" : "text-cream";
-  const linkColorClass = isFilled ? "text-slabs-text-muted" : "text-cream/80";
-  const iconColorClass = isFilled ? "text-slabs-text-muted" : "text-cream/80";
+  const wordmarkColorClass = "text-slabs-text";
+  const linkColorClass = "text-slabs-text-muted";
+  const iconColorClass = "text-slabs-text-muted";
 
   return (
     <>
