@@ -29,20 +29,9 @@ function CatalogEntry(record: CatalogEntryProps) {
   return (
     <div className="border border-slabs-border bg-slabs-surface cursor-default hover:-translate-y-[3px] hover:shadow-[0_4px_16px_rgba(20,19,19,0.08)] transition-all duration-[200ms] ease-analog flex flex-col group/card">
       {/* Image container & link */}
-      <Link href={`/products/${record.slug}`} className="relative block overflow-visible group/link w-full aspect-square">
-        {/* Vinyl disc (CSS only) */}
-        <div
-          className="absolute rounded-full z-10 transition-transform duration-[300ms] ease-analog transform translate-x-0 group-hover/link:translate-x-[55%]"
-          style={{
-            top: "5%",
-            left: "5%",
-            width: "88%",
-            height: "88%",
-            background: "radial-gradient(circle at center, #1a1818 0%, #1a1818 15%, #2a2828 15%, #141313 40%, #1f1d1d 42%, #141313 44%, #1f1d1d 46%, #141313 100%)"
-          }}
-        />
+      <Link href={`/products/${record.slug}`} className="relative block overflow-hidden w-full aspect-square">
         {/* Album sleeve */}
-        <div className="relative w-full h-full z-20 overflow-hidden bg-sleeve">
+        <div className="relative w-full h-full bg-sleeve">
            {/* We use a solid bg-sleeve since we don't have mock images, but if we did we'd use <img className="w-full h-full object-cover" /> */}
            {/* Placeholder for the image. Applying saturate filter if out of stock */}
            <div className={`w-full h-full border-b border-slabs-border ${!record.inStock ? "saturate-[0.7]" : ""}`} />
