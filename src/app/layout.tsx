@@ -1,4 +1,4 @@
-import { Instrument_Serif } from "next/font/google";
+import { Instrument_Serif, Funnel_Display, Funnel_Sans } from "next/font/google";
 import "./globals.css";
 
 const instrumentSerif = Instrument_Serif({
@@ -6,6 +6,16 @@ const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   style: ["normal", "italic"],
   variable: "--font-instrument-serif",
+});
+
+const funnelDisplay = Funnel_Display({
+  subsets: ["latin"],
+  variable: "--font-funnel-display",
+});
+
+const funnelSans = Funnel_Sans({
+  subsets: ["latin"],
+  variable: "--font-funnel-sans",
 });
 
 export const metadata = {
@@ -19,12 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${instrumentSerif.variable}`}>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet" />
-      </head>
+    <html lang="en" className={`${instrumentSerif.variable} ${funnelDisplay.variable} ${funnelSans.variable}`}>
       <body className="bg-slabs-surface text-slabs-text font-sans antialiased">
         {children}
       </body>

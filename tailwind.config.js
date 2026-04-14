@@ -14,9 +14,9 @@ module.exports = {
       full:    "9999px", // ONLY for vinyl disc — no other use
     },
     fontFamily: {
-      serif:   ["Instrument Serif", "Georgia", "serif"],
-      display: ["Funnel Display", "Helvetica Neue", "sans-serif"],
-      sans:    ["Funnel Sans", "Helvetica Neue", "sans-serif"],
+      serif:   ["var(--font-instrument-serif)", "Georgia", "serif"],
+      display: ["var(--font-funnel-display)", "Helvetica Neue", "sans-serif"],
+      sans:    ["var(--font-funnel-sans)", "Helvetica Neue", "sans-serif"],
     },
     extend: {
       keyframes: {
