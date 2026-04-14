@@ -25,7 +25,7 @@ export function AboutTrust() {
               className="group inline-flex items-center font-display text-[12px] uppercase tracking-[0.06em] text-slabs-text-muted hover:text-slabs-text transition-colors duration-fast ease-analog"
             >
               Our story{" "}
-              <span className="ml-1 group-hover:ml-[10px] transition-all duration-fast ease-analog">
+              <span aria-hidden="true" className="ml-1 group-hover:ml-[10px] transition-all duration-fast ease-analog inline-block">
                 →
               </span>
             </Link>
@@ -33,11 +33,11 @@ export function AboutTrust() {
 
           {/* Right Column — Image Grid */}
           <div className="grid grid-cols-2 gap-3">
-            {[1, 2, 3, 4].map((num) => (
+            {["01", "02", "03", "04"].map((num) => (
               <div key={num} className="relative aspect-square w-full">
                 <Image
-                  src={`/assets/placeholder-0${num}.jpg`}
-                  alt={`Placeholder ${num}`}
+                  src={`/assets/placeholder-${num}.jpg`}
+                  alt=""
                   fill
                   className="object-cover rounded-none"
                 />
