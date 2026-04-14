@@ -1,5 +1,6 @@
 import { Instrument_Serif } from "next/font/google";
 import "./globals.css";
+import { Footer } from "../components/Footer";
 
 const instrumentSerif = Instrument_Serif({
   weight: ["400"],
@@ -27,6 +28,7 @@ export default function RootLayout({
       </head>
       <body className="bg-slabs-surface text-slabs-text font-sans antialiased">
         {children}
+        <Footer />
       </body>
     </html>
   );
