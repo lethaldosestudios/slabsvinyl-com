@@ -134,18 +134,11 @@ export function Nav({ cartCount, currentPath, transparent = false }: NavProps) {
 
         <div className="flex-1 flex flex-col items-center justify-center px-6 gap-8">
           {navLinks.map((link, index) => {
-            const delayClass =
-              index === 0 ? "delay-[0ms]" :
-              index === 1 ? "delay-[60ms]" :
-              index === 2 ? "delay-[120ms]" :
-              index === 3 ? "delay-[180ms]" :
-              "delay-[240ms]";
-
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`font-serif italic font-normal text-cream transform transition-all duration-std ease-analog text-[36px] ${delayClass}
+                className={`font-serif italic font-normal text-cream transform transition-all duration-std ease-analog text-[36px] delay-[${index * 60}ms]
                   ${mobileMenuOpen ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}
                 `}
                 onClick={() => setMobileMenuOpen(false)}
