@@ -1,24 +1,54 @@
---- src/components/NewArrivals.tsx
-+++ src/components/NewArrivals.tsx
-@@ -29,7 +29,11 @@
-   return (
-     <div className="border border-slabs-border bg-slabs-surface cursor-default hover:-translate-y-[3px] hover:shadow-[0_4px_16px_rgba(20,19,19,0.08)] transition-all duration-[200ms] ease-analog flex flex-col group/card">
-       {/* Image container & link */}
--      <Link href={`/products/${record.slug}`} className="relative block overflow-hidden w-full aspect-square">
-+      <Link
-+        href={`/products/${record.slug}`}
-+        className="relative block overflow-hidden w-full aspect-square focus-visible:ring-2 focus-visible:ring-slabs-text focus-visible:outline-none"
-+        aria-label={`View details for ${record.title} by ${record.artist}`}
-+      >
-         {/* Album sleeve */}
-         <div className="relative w-full h-full bg-sleeve">
-            {/* We use a solid bg-sleeve since we don't have mock images, but if we did we'd use <img className="w-full h-full object-cover" /> */}
-@@ -112,7 +116,7 @@
-             className="group flex items-center font-display text-[12px] uppercase tracking-[0.06em] text-slabs-text-muted hover:text-slabs-text transition-colors duration-fast ease-analog"
-           >
-             View all new arrivals
--            <span className="ml-1 group-hover:ml-[10px] transition-all duration-fast ease-analog inline-block">
-+            <span aria-hidden="true" className="ml-1 group-hover:ml-[10px] transition-all duration-fast ease-analog inline-block">
-               →
-             </span>
-           </Link>
+<<<<<<< SEARCH
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en" className={`${instrumentSerif.variable}`}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet" />
+      </head>
+      <body className="bg-slabs-surface text-slabs-text font-sans antialiased">
+        {children}
+        <Footer />
+      </body>
+    </html>
+  );
+}
+=======
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en" className={`${instrumentSerif.variable}`} suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                } else {
+                  document.documentElement.setAttribute('data-theme', 'light');
+                }
+              } catch (_) {}
+            `,
+          }}
+        />
+      </head>
+      <body className="bg-slabs-surface text-slabs-text dark:bg-dark-surface dark:text-dark-text font-sans antialiased transition-colors duration-fast ease-analog">
+        {children}
+        <Footer />
+      </body>
+    </html>
+  );
+}
+>>>>>>> REPLACE

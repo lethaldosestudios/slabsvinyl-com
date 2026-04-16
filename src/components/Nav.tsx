@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X, Search, ShoppingBag, Disc, Archive } from "lucide-react";
+import { ThemeToggle } from "./ThemeToggle";
 
 interface NavProps {
   cartCount: number;
@@ -49,12 +50,12 @@ export function Nav({ cartCount, currentPath, transparent = false }: NavProps) {
   const isFilled = scrolled || !transparent;
 
   // Desktop styles
-  const headerBgClass = isFilled ? "bg-slabs-surface" : "bg-transparent";
-  const headerBorderClass = isFilled ? "border-b border-slabs-border" : "border-b-0 border-transparent";
+  const headerBgClass = isFilled ? "bg-slabs-surface dark:bg-dark-surface" : "bg-transparent";
+  const headerBorderClass = isFilled ? "border-b border-slabs-border dark:border-dark-border" : "border-b-0 border-transparent";
 
-  const wordmarkColorClass = "text-slabs-text";
-  const linkColorClass = "text-slabs-text-muted";
-  const iconColorClass = "text-slabs-text-muted";
+  const wordmarkColorClass = "text-slabs-text dark:text-dark-text";
+  const linkColorClass = "text-slabs-text-muted dark:text-dark-text-muted";
+  const iconColorClass = "text-slabs-text-muted dark:text-dark-text-muted";
 
   return (
     <>
@@ -79,7 +80,7 @@ export function Nav({ cartCount, currentPath, transparent = false }: NavProps) {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`group relative font-display text-ui-nav font-normal tracking-[0.01em] ${linkColorClass} transition-colors duration-fast ease-analog hover:text-slabs-text`}
+                  className={`group relative font-display text-ui-nav font-normal tracking-[0.01em] ${linkColorClass} transition-colors duration-fast ease-analog hover:text-slabs-text dark:hover:text-dark-text`}
                 >
                   {link.label}
                   <span
@@ -94,10 +95,11 @@ export function Nav({ cartCount, currentPath, transparent = false }: NavProps) {
 
           {/* Icons (Right) */}
           <div className="flex items-center gap-4">
-            <button aria-label="Search" className={`hidden md:flex ${iconColorClass} hover:text-slabs-text transition-colors duration-fast ease-analog`}>
+            <ThemeToggle className={`hidden md:flex ${iconColorClass} hover:text-slabs-text dark:hover:text-dark-text`} />
+            <button aria-label="Search" className={`hidden md:flex ${iconColorClass} hover:text-slabs-text dark:hover:text-dark-text transition-colors duration-fast ease-analog`}>
               <Search size={20} strokeWidth={1.5} />
             </button>
-            <button aria-label="Cart" className={`relative hidden md:flex ${iconColorClass} hover:text-slabs-text transition-colors duration-fast ease-analog`}>
+            <button aria-label="Cart" className={`relative hidden md:flex ${iconColorClass} hover:text-slabs-text dark:hover:text-dark-text transition-colors duration-fast ease-analog`}>
               <ShoppingBag size={20} strokeWidth={1.5} />
               {cartCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-amber text-ink font-sans font-bold flex items-center justify-center rounded-none leading-none w-4 h-4 text-[10px]">
@@ -120,7 +122,7 @@ export function Nav({ cartCount, currentPath, transparent = false }: NavProps) {
 
       {/* Mobile Full-Screen Overlay */}
       <div
-        className={`fixed inset-0 z-50 bg-ink flex flex-col transition-opacity duration-std ease-analog ${
+        className={`fixed inset-0 z-50 bg-ink dark:bg-dark-surface flex flex-col transition-opacity duration-std ease-analog ${
           mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >
@@ -157,7 +159,11 @@ export function Nav({ cartCount, currentPath, transparent = false }: NavProps) {
         </div>
 
         {/* Mobile Persistent Bottom Bar */}
-        <div className="fixed bottom-0 left-0 w-full bg-ink border-t border-dark-border flex items-center justify-between px-6 pb-safe h-[56px]">
+        <div className="fixed bottom-0 left-0 w-full bg-ink dark:bg-dark-surface-muted border-t border-dark-border flex items-center justify-between px-6 pb-safe h-[56px]">
+          <div className="flex flex-col items-center gap-1 text-dark-text-muted hover:text-cream transition-colors duration-fast ease-analog">
+            <ThemeToggle />
+            <span className="font-display uppercase tracking-widest leading-none text-[9px]">Theme</span>
+          </div>
           <Link href="/shop" className="flex flex-col items-center gap-1 text-dark-text-muted hover:text-cream transition-colors duration-fast ease-analog" onClick={() => setMobileMenuOpen(false)}>
             <Disc size={20} strokeWidth={1.5} />
             <span className="font-display uppercase tracking-widest leading-none text-[9px]">Shop</span>

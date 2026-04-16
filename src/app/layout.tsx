@@ -20,13 +20,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${instrumentSerif.variable}`}>
+    <html lang="en" className={`${instrumentSerif.variable}`} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                } else {
+                  document.documentElement.setAttribute('data-theme', 'light');
+                }
+              } catch (_) {}
+            `,
+          }}
+        />
       </head>
-      <body className="bg-slabs-surface text-slabs-text font-sans antialiased">
+      <body className="bg-slabs-surface text-slabs-text dark:bg-dark-surface dark:text-dark-text font-sans antialiased transition-colors duration-fast ease-analog">
         {children}
         <Footer />
       </body>

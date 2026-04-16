@@ -11,6 +11,8 @@ vi.mock('lucide-react', () => ({
   ShoppingBag: () => <div data-testid="icon-shopping-bag" />,
   Disc: () => <div data-testid="icon-disc" />,
   Archive: () => <div data-testid="icon-archive" />,
+  Moon: () => <div data-testid="icon-moon" />,
+  Sun: () => <div data-testid="icon-sun" />,
 }));
 
 // Mock next/link to prevent navigation errors in jsdom
