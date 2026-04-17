@@ -1,5 +1,5 @@
 # SLABS VINYL SUPPLY — MASTER BUILD PROMPT
-## System Prompt · Prepend to Every Section · v2.0 · April 2026
+## System Prompt · Prepend to Every Section · v2.1 · April 2026
 
 > **How to use this file:** Copy this entire prompt and paste it at the top of every section build request. This is the single source of truth. The builder reads this first, then receives the section-specific instructions below it. Do not paraphrase or summarize — paste it in full.
 
@@ -133,12 +133,24 @@ module.exports = {
 
 ## BLOCK 2 — DESIGN SYSTEM DIRECTIVES
 
-### Fonts — Load Order
+### Fonts — Load Method
 
-```html
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Funnel+Display:wght@300..800&family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet">
+**Instrument Serif** is loaded via `next/font/google` in `src/app/layout.tsx` and injected as a CSS variable (`--font-instrument-serif`).
+
+**Funnel Display and Funnel Sans** are loaded via standard Google Fonts `<link>` tags in the `<head>` block of `src/app/layout.tsx`. Do NOT migrate them to `next/font/google` — they are intentionally kept as link tags.
+
+The current working load pattern in `layout.tsx`:
+
+```tsx
+// next/font for Instrument Serif only
+import { Instrument_Serif } from "next/font/google";
+
+// Funnel Display + Funnel Sans via <head> link tags:
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet" />
+</head>
 ```
 
 ### Font Zone Rules — Non-Negotiable
@@ -162,6 +174,15 @@ module.exports = {
 - Surface (`#EFEEEA`) is Cream — used for cards and panels, slightly darker than Paper.
 - Dark mode depth scale: `#141313` (base) → `#242120` (surface) → `#323030` (inputs/nested). These three steps are the only dark surfaces — do not invent new values.
 
+### Dark Mode — How to Apply
+
+Dark mode is toggled via `data-theme="dark"` on the `<html>` element. The `ThemeToggle` component (PR #21, pending merge) handles this. When applying dark mode styles:
+
+- Use `dark:` Tailwind variants tied to the `dark-*` semantic tokens only — e.g. `dark:bg-dark-bg`, `dark:text-dark-text`
+- Do not invent new dark surface colors — use only `dark-bg`, `dark-surface`, `dark-surface-muted`
+- Apply `dark:` variants to every component that has a background, text color, or border
+- Do not apply dark mode until PR #21 is merged to main. New components should include `dark:` class variants in anticipation, but they will have no effect until the toggle lands
+
 ### Border Radius — Zero Everywhere
 
 ```
@@ -175,8 +196,8 @@ The only exception in the entire codebase: the vinyl disc element uses `border-r
 All borders and dividers use alpha transparency — never solid gray:
 - Borders (light): `rgba(20, 19, 19, 0.12)`
 - Dividers (light): `rgba(20, 19, 19, 0.08)`
-- Borders (dark): `rgba(239, 238, 234, 0.10)`
-- Dividers (dark): `rgba(239, 238, 234, 0.07)`
+- Borders (dark): `rgba(239, 238, 234, 0.10)` — or token `border-dark-border`
+- Dividers (dark): `rgba(239, 238, 234, 0.07)` — or token `border-dark-divider`
 
 ### Action Hierarchy — Four Levels Only
 
@@ -217,6 +238,23 @@ Use Lucide icons only. Always 16px (UI) or 20px (nav). Stroke weight: 1.5px. Col
 - All section vertical padding: `clamp(4rem, 8vw, 8rem)`
 - Body text max-width: `65ch`
 
+### Homepage Section Order — Canonical
+
+The `src/app/page.tsx` file must render sections in exactly this order:
+
+```
+1. Nav
+2. Hero
+3. NewArrivals
+4. FeaturedCollections
+5. FromTheCrates       ← not yet built
+6. SonicLineage        ← in progress
+7. AboutTrust
+8. Footer
+```
+
+Footer is also rendered globally in `src/app/layout.tsx`. Do not duplicate it. When adding a new section to `page.tsx`, place it in the position above — do not append to the bottom without checking order first.
+
 ---
 
 ## BLOCK 3 — HARD CONSTRAINTS
@@ -239,6 +277,7 @@ These are explicit rejections. If the builder would normally do any of these, do
 - Any font size below 12px
 - Tailwind default color names (`blue-500`, `gray-200`, etc.) — use only the Slabs color tokens defined in the config above
 - Default Tailwind border-radius classes (`rounded`, `rounded-lg`, etc.) — they are all overridden to `0`
+- Migrating Funnel Display or Funnel Sans to `next/font/google` — they must stay as `<link>` tags
 
 ### Product Card Specific
 - No buy button in the product grid — "Grab it" lives on the product detail page only
@@ -254,6 +293,6 @@ These are explicit rejections. If the builder would normally do any of these, do
 
 ---
 
-*This master prompt represents the locked design system for slabsvinyl.com v2.0.*
+*This master prompt represents the locked design system for slabsvinyl.com v2.1.*
 *All values sourced from: slabs-design-system-v2.md + typography-design-system.md*
 *Do not modify these values. Section-specific prompts follow below this block.*
