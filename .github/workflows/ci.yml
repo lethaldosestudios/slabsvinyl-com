@@ -1,0 +1,85 @@
+# ─────────────────────────────────────────────────────────────
+# CI Workflow — slabsvinyl-com
+# Template: copy this file into any JS/TS project and update
+# the PROJECT-SPECIFIC sections marked below.
+# ─────────────────────────────────────────────────────────────
+
+name: CI
+
+# ── TRIGGERS ────────────────────────────────────────────────
+# Runs on every push to main AND on every PR targeting main.
+# No changes needed here for most projects.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+
+  # ── JOB 1: TEST ───────────────────────────────────────────
+  # Runs the test suite. This job name ("test") is what you
+  # reference in branch protection → required status checks.
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Clone the repo onto the runner
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Install Node.js
+      # PROJECT-SPECIFIC: change node-version to match your project
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      # 3. Enable pnpm via corepack (prevents npm/pnpm conflicts)
+      # Remove this block if your project uses npm or yarn instead
+      - name: Enable pnpm
+        run: corepack enable pnpm
+
+      # 4. Install dependencies (frozen = respects lockfile exactly)
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # 5. Run tests
+      # PROJECT-SPECIFIC: change this command to match your test runner
+      # e.g. pnpm test, pnpm run test, npx jest, etc.
+      - name: Run tests
+        run: pnpm test --run
+
+  # ── JOB 2: BUILD ──────────────────────────────────────────
+  # Verifies the project compiles without errors.
+  # Catches broken imports, TypeScript errors, and missing
+  # components before they reach main.
+  # This job name ("build") is also used in branch protection.
+  build:
+    name: Build Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Enable pnpm
+        run: corepack enable pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # PROJECT-SPECIFIC: change this to your build command
+      # Next.js: pnpm build
+      # Vite:    pnpm build
+      # tsc only: pnpm exec tsc --noEmit
+      - name: Build
+        run: pnpm build
