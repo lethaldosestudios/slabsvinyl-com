@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --font-funnel-display: 'Funnel Display', sans-serif;
+  --font-funnel-sans: 'Funnel Sans', sans-serif;
+}
+
 /* Global reset — zero border-radius everywhere (vinyl disc is the only exception) */
 *, *::before, *::after {
   border-radius: 0 !important;
