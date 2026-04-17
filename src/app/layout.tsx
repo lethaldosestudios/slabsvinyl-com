@@ -1,5 +1,6 @@
 import { Instrument_Serif } from "next/font/google";
 import "./globals.css";
+import { Footer } from "../components/Footer";
 
 const instrumentSerif = Instrument_Serif({
   weight: ["400"],
@@ -23,10 +24,11 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet" />
       </head>
       <body className="bg-slabs-surface text-slabs-text font-sans antialiased">
         {children}
+        <Footer />
       </body>
     </html>
   );

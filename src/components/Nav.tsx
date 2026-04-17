@@ -18,6 +18,14 @@ const navLinks = [
   { label: "About", href: "/about" },
 ];
 
+
+const mobileNavItems = [
+  { label: "Shop", icon: Disc, href: "/shop" },
+  { label: "Crate", icon: Archive, href: "/crate" },
+  { label: "Search", icon: Search, action: "search" },
+  { label: "Cart", icon: ShoppingBag, action: "cart" },
+];
+
 export function Nav({ cartCount, currentPath, transparent = false }: NavProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -134,18 +142,12 @@ export function Nav({ cartCount, currentPath, transparent = false }: NavProps) {
 
         <div className="flex-1 flex flex-col items-center justify-center px-6 gap-8">
           {navLinks.map((link, index) => {
-            const delayClass =
-              index === 0 ? "delay-[0ms]" :
-              index === 1 ? "delay-[60ms]" :
-              index === 2 ? "delay-[120ms]" :
-              index === 3 ? "delay-[180ms]" :
-              "delay-[240ms]";
-
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`font-serif italic font-normal text-cream transform transition-all duration-std ease-analog text-[36px] ${delayClass}
+                style={{ transitionDelay: `${index * 60}ms` }}
+                className={`font-serif italic font-normal text-cream transform transition-all duration-std ease-analog text-[36px]
                   ${mobileMenuOpen ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}
                 `}
                 onClick={() => setMobileMenuOpen(false)}
@@ -156,31 +158,40 @@ export function Nav({ cartCount, currentPath, transparent = false }: NavProps) {
           })}
         </div>
 
-        {/* Mobile Persistent Bottom Bar */}
+{/* Mobile Persistent Bottom Bar */}
         <div className="fixed bottom-0 left-0 w-full bg-ink border-t border-dark-border flex items-center justify-between px-6 pb-safe h-[56px]">
-          <Link href="/shop" className="flex flex-col items-center gap-1 text-dark-text-muted hover:text-cream transition-colors duration-fast ease-analog" onClick={() => setMobileMenuOpen(false)}>
-            <Disc size={20} strokeWidth={1.5} />
-            <span className="font-display uppercase tracking-widest leading-none text-[9px]">Shop</span>
-          </Link>
-          <Link href="/crate" className="flex flex-col items-center gap-1 text-dark-text-muted hover:text-cream transition-colors duration-fast ease-analog" onClick={() => setMobileMenuOpen(false)}>
-            <Archive size={20} strokeWidth={1.5} />
-            <span className="font-display uppercase tracking-widest leading-none text-[9px]">Crate</span>
-          </Link>
-          <button aria-label="Search" className="flex flex-col items-center gap-1 text-dark-text-muted hover:text-cream transition-colors duration-fast ease-analog" onClick={() => setMobileMenuOpen(false)}>
-            <Search size={20} strokeWidth={1.5} />
-            <span className="font-display uppercase tracking-widest leading-none text-[9px]">Search</span>
-          </button>
-          <button aria-label="Cart" className="flex flex-col items-center gap-1 text-dark-text-muted hover:text-cream relative transition-colors duration-fast ease-analog" onClick={() => setMobileMenuOpen(false)}>
-            <div className="relative">
-              <ShoppingBag size={20} strokeWidth={1.5} />
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-2 bg-amber text-ink font-sans font-bold flex items-center justify-center rounded-none leading-none w-4 h-4 text-[10px]">
-                  {cartCount}
-                </span>
-              )}
-            </div>
-            <span className="font-display uppercase tracking-widest leading-none text-[9px]">Cart</span>
-          </button>
+          {mobileNavItems.map((item) => {
+            const Icon = item.icon;
+            const commonClasses = "flex flex-col items-center gap-1 text-dark-text-muted hover:text-cream transition-colors duration-fast ease-analog";
+            const labelClasses = "font-display uppercase tracking-widest leading-none text-[9px]";
+
+            if (item.href) {
+              return (
+                <Link key={item.label} href={item.href} className={commonClasses} onClick={() => setMobileMenuOpen(false)}>
+                  <Icon size={20} strokeWidth={1.5} />
+                  <span className={labelClasses}>{item.label}</span>
+                </Link>
+              );
+            }
+
+            return (
+              <button key={item.label} aria-label={item.label} className={`${commonClasses}${item.action === 'cart' ? ' relative' : ''}`} onClick={() => setMobileMenuOpen(false)}>
+                {item.action === 'cart' ? (
+                  <div className="relative">
+                    <Icon size={20} strokeWidth={1.5} />
+                    {cartCount > 0 && (
+                      <span className="absolute -top-1 -right-2 bg-amber text-ink font-sans font-bold flex items-center justify-center rounded-none leading-none w-4 h-4 text-[10px]">
+                        {cartCount}
+                      </span>
+                    )}
+                  </div>
+                ) : (
+                  <Icon size={20} strokeWidth={1.5} />
+                )}
+                <span className={labelClasses}>{item.label}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
     </>

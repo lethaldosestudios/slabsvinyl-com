@@ -9,7 +9,6 @@ interface CatalogEntryProps {
   label: string;
   year: string;
   catalogNumber: string;
-  imageUrl?: string;
   slug: string;
   inStock: boolean;
 }
