@@ -29,18 +29,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Install Node.js
+      # 2. Install pnpm BEFORE setup-node so the cache step can locate it
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      # 3. Install Node.js (pnpm is now on PATH, cache works correctly)
       # PROJECT-SPECIFIC: change node-version to match your project
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'pnpm'
-
-      # 3. Enable pnpm via corepack (prevents npm/pnpm conflicts)
-      # Remove this block if your project uses npm or yarn instead
-      - name: Enable pnpm
-        run: corepack enable pnpm
 
       # 4. Install dependencies (frozen = respects lockfile exactly)
       - name: Install dependencies
@@ -65,14 +66,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'pnpm'
-
-      - name: Enable pnpm
-        run: corepack enable pnpm
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
