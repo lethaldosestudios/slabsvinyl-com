@@ -29,11 +29,7 @@ function CatalogEntry(record: CatalogEntryProps) {
   return (
     <div className="border border-slabs-border bg-slabs-surface cursor-default hover:-translate-y-[3px] hover:shadow-[0_4px_16px_rgba(20,19,19,0.08)] transition-all duration-[200ms] ease-analog flex flex-col group/card">
       {/* Image container & link */}
-      <Link
-        href={`/products/${record.slug}`}
-        className="relative block overflow-hidden w-full aspect-square focus-visible:ring-2 focus-visible:ring-slabs-text focus-visible:outline-none"
-        aria-label={`View details for ${record.title} by ${record.artist}`}
-      >
+      <Link href={`/products/${record.slug}`} className="relative block overflow-hidden w-full aspect-square">
         {/* Album sleeve */}
         <div className="relative w-full h-full bg-sleeve">
            {/* We use a solid bg-sleeve since we don't have mock images, but if we did we'd use <img className="w-full h-full object-cover" /> */}
@@ -116,7 +112,7 @@ export function NewArrivals() {
             className="group flex items-center font-display text-[12px] uppercase tracking-[0.06em] text-slabs-text-muted hover:text-slabs-text transition-colors duration-fast ease-analog"
           >
             View all new arrivals
-            <span aria-hidden="true" className="ml-1 group-hover:ml-[10px] transition-all duration-fast ease-analog inline-block">
+            <span className="ml-1 group-hover:ml-[10px] transition-all duration-fast ease-analog inline-block">
               →
             </span>
           </Link>
