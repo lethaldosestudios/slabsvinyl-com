@@ -3,7 +3,6 @@ import { Hero } from "../components/Hero";
 import { NewArrivals } from "../components/NewArrivals";
 import { FeaturedCollections } from "../components/FeaturedCollections";
 import { AboutTrust } from "../components/AboutTrust";
-import { Footer } from "../components/Footer";
 
 export default function HomePage() {
   return (
@@ -13,7 +12,6 @@ export default function HomePage() {
       <NewArrivals />
       <FeaturedCollections />
       <AboutTrust />
-      <Footer />
     </main>
   );
 }
