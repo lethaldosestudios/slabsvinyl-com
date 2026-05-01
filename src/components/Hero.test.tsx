@@ -1,9 +1,9 @@
 import { render, screen, act, fireEvent } from "@testing-library/react";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { Hero } from "./Hero";
 
 // Mock next/image
-jest.mock("next/image", () => ({
-  __esModule: true,
+vi.mock("next/image", () => ({
   default: (props: any) => {
     // eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element
     const { priority, ...rest } = props;
@@ -12,19 +12,20 @@ jest.mock("next/image", () => ({
 }));
 
 // Mock lucide-react
-jest.mock("lucide-react", () => ({
+vi.mock("lucide-react", () => ({
   ChevronDown: () => <div data-testid="chevron-down" />,
 }));
 
 describe("Hero Component", () => {
   beforeEach(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     // Reset window.scrollY
     Object.defineProperty(window, 'scrollY', { value: 0, writable: true });
   });
 
   afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
+    vi.restoreAllMocks();
   });
 
   it("mounts with initial state (opacity-0)", () => {
@@ -53,7 +54,7 @@ describe("Hero Component", () => {
 
     // Fast-forward timers by 10ms
     act(() => {
-      jest.advanceTimersByTime(10);
+      vi.advanceTimersByTime(10);
     });
 
     const wordmarkContainer = screen.getByAltText("Slabs Vinyl Supply").parentElement;
@@ -91,9 +92,9 @@ describe("Hero Component", () => {
   });
 
   it("cleans up event listeners and timeouts on unmount", () => {
-    const addEventListenerSpy = jest.spyOn(window, "addEventListener");
-    const removeEventListenerSpy = jest.spyOn(window, "removeEventListener");
-    const clearTimeoutSpy = jest.spyOn(window, "clearTimeout");
+    const addEventListenerSpy = vi.spyOn(window, "addEventListener");
+    const removeEventListenerSpy = vi.spyOn(window, "removeEventListener");
+    const clearTimeoutSpy = vi.spyOn(window, "clearTimeout");
 
     const { unmount } = render(<Hero />);
 
@@ -103,9 +104,5 @@ describe("Hero Component", () => {
 
     expect(removeEventListenerSpy).toHaveBeenCalledWith("scroll", expect.any(Function));
     expect(clearTimeoutSpy).toHaveBeenCalled();
-
-    addEventListenerSpy.mockRestore();
-    removeEventListenerSpy.mockRestore();
-    clearTimeoutSpy.mockRestore();
   });
 });
